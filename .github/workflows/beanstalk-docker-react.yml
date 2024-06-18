@@ -31,12 +31,12 @@ jobs:
         run: |
           aws elasticbeanstalk create-application-version \
             --application-name docker-react \
-            --version-label ${{ env.IMAGE }} \
-            --source-bundle S3Bucket=${{ secrets.AWS_S3_BUCKET }},S3Key=docker-react-app:${IMAGE_TAG}
+            --version-label ${{ ifedim/docker-react }} \
+            --source-bundle S3Bucket=${{ secrets.AWS_S3_BUCKET }},S3Key=docker-react:${{secrets.AWS_S3_BUCKET_KEY}}
           
           aws elasticbeanstalk update-environment \
             --environment-name Docker-react-env \
-            --version-label ${{ env.IMAGE }}
+            --version-label ${{ ifedim/docker-react }}
           env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
