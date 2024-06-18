@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: Deploy on AWS Elastic Beanstalk Environment
         id: ebs-env
-        uses: ifediM/docker-react-deploy@master
+        uses: ifediM/docker-react@master
         with:
           region: "us-east-1"
           environment_name: Docker-react-env
