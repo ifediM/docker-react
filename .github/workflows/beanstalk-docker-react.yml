@@ -24,22 +24,20 @@ jobs:
     runs-on: ubuntu-latest  
       
     steps:
-      - name: Deploy on AWS Elastic Beanstalk Environment
-        id: ebs-env
-        uses: ifediM/docker-react@master
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to AWS Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v22
         with:
-          region: "us-east-1"
-          environment_name: Docker-react-env
-          application_name: docker-react
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          s3_bucket_name: elasticbeanstalk-us-east-1-850293856303
-          s3_file_path: docker-react
-          ebs_version_label: ${{ github.sha }}
-          ebs_description: ${{ github.sha }}
-          ebs_wait_for_env_to_be_green: true
-          expected_version: latest
-          use_same_version: true
+          application_name: docker-react
+          environment_name: Docker-react-env
+          version_label: ${{ github.sha }}
+          region: us-east-1
+          s3_bucket: ${{ secrets.AWS_S3_BUCKET }}
+          s3_key:  ${{ secrets.AWS_S3_BUCKET_KEY }}
         
         
             
