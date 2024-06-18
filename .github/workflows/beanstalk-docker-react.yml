@@ -1,0 +1,33 @@
+name: docker-react
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} 
+      - name: Build docker image
+        run: docker build -t ifedim/docker-react .
+      - name: Publish image to docker hub
+        run: docker push ifedim/docker-react:latest
+
+        
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v22
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: docker-react
+          environment_name: Docker-react-env
+          version_label: 12345
+          region: us-east-1
+          #deployment_package:
+    
+ 
