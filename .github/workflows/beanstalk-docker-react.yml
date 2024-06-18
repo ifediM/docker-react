@@ -19,6 +19,9 @@ jobs:
         run: docker push ifedim/docker-react:latest
 
 
+        
+
+
   Deploy:
     needs: build
     runs-on: ubuntu-latest  
@@ -28,7 +31,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy to AWS Elastic Beanstalk
-        uses: ifediM/docker-react@master
+        uses: DylanBDev/beanstalk-deploy@initial
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -38,6 +41,10 @@ jobs:
           region: us-east-1
           s3_bucket: ${{ secrets.AWS_S3_BUCKET }}
           s3_key:  ${{ secrets.AWS_S3_BUCKET_KEY }}
+
+
+
+    
         
         
             
